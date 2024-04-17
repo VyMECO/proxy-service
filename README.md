@@ -51,9 +51,11 @@ The goal of this project is to create the following things:
 ## 5. Exporting/Saving image and reusing 
 
  To export 3proxy image, run this command where the image is already present/built 
-	docker save -o 3proxy.tar 3proxy:latest
+	
+ 	docker save -o 3proxy.tar 3proxy:latest
 
-	Load on target machine:
+Load on target machine:
+
 	docker load -i 3proxy.tar
 	
 	Also in the install_env.sh it provides the user option to load an existing image. 
