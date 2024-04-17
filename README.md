@@ -11,51 +11,58 @@ The goal of this project is to create the following things:
 		
 ## 1. install_env.sh 
 	
- This is the installer script, currently it supports Ubuntu 18.04 only, to add further distros it needs to be tested on those distros. 
-	Usuage: 
-		bash install_env.sh 
-		
-		steps:
-			i. checks if script is executed as root (required)
-			ii. checks if target system is 18.04 (only supported right now)
-			iii. checks if local DNS server running, if not install bind9 
-			iv. check is docker is installed, if not install docker 
-			v. prompt user if they want to build 3proxy image, or to use existing image (ask for image path)
-			vi. starts container 
+This is the installer script, currently it supports Ubuntu 18.04 only, to add further distros it needs to be tested on those distros. 
+
+```bash
+bash install_env.sh 
+```
+
+Steps performed by `install_env.sh`:
+
+1. checks if script is executed as root (required)
+2. checks if target system is 18.04 (only supported right now)
+3. checks if local DNS server running, if not install bind9 
+4. check is docker is installed, if not install docker 
+5. prompt user if they want to build 3proxy image, or to use existing image (ask for image path)
+6. starts container 
 			
 ## 2. helper/init.sh 
 
- Executed on container start, checks if 3proxy.cfg exist already, if not then copy a stable version 
-	Generate secret password 
-	Start supervisor services for 3proxy and API 
+1. Executed on container start, checks if 3proxy.cfg exist already, if not then copy a stable version 
+2. Generate secret password 
+3. Start supervisor services for 3proxy and API 
 	
 ## 3. 3proxy container: 
 	
- container utilizes host network and NET_ADMIN capabilities (to add IPv6 address to interfaces)
-	mounts config directory to /app/config in container 
-	echo port's configuration is written to it's own file, like for port 4000, /app/config/4000.cfg (inside container path) is created 
-	mounts log directory to /app/log/
-	secret file path config/secret (/app/config/secret inside container)
+1. container utilizes host network and NET_ADMIN capabilities (to add IPv6 address to interfaces)
+2. mounts config directory to /app/config in container 
+3. echo port's configuration is written to it's own file, like for port 4000, /app/config/4000.cfg (inside container path) is created 
+4. mounts log directory to /app/log/
+5. secret file path config/secret (/app/config/secret inside container)
 
 ## 4. API details : 
 
-	API provides following endpoints: (all endpoints require secret)
+API provides following endpoints: (all endpoints require secret)
 	
-	i. /install4.json
-	ii. /install6.json
-	iii. /get6.json
-	iv. /create_user_credentials.json
-	v. /create_ip_credentials.json
-	vi. /delete_credentials.json
+1. /install4.json
+2. /install6.json
+3. /get6.json
+4. /create_user_credentials.json
+5. /create_ip_credentials.json
+7. /delete_credentials.json
 	
 ## 5. Exporting/Saving image and reusing 
 
- To export 3proxy image, run this command where the image is already present/built 
+To export 3proxy image, run this command where the image is already present/built 
 	
- 	docker save -o 3proxy.tar 3proxy:latest
+```bash
+docker save -o 3proxy.tar 3proxy:latest
+```
 
 Load on target machine:
 
-	docker load -i 3proxy.tar
-	
-	Also in the install_env.sh it provides the user option to load an existing image. 
+```bash
+docker load -i 3proxy.tar
+```
+
+Also in the install_env.sh it provides the user option to load an existing image. 
