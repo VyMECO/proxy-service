@@ -42,7 +42,7 @@ Steps performed by `install_env.sh`:
 
 ## 4. API details : 
 
-API provides following endpoints: (all endpoints require secret)
+API provides following endpoints: (API is running at port 3120, and all endpoints require 'secret' parameter passed to them)
 	
 1. /install4.json
 2. /install6.json
